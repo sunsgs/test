@@ -6,7 +6,13 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
+if (window.location.protocol === 'http:') {
+  angular.module('starter').constant('api_base', '/api');
+} else {
+  angular.module('starter').constant('api_base', 'http://www.appizzame.com/api');
+}
+
+angular.module('starter').run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

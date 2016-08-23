@@ -1,10 +1,14 @@
 angular.module('starter').service('tuo_service', function($q, $http, api_base) {
 
+  var urlBase;
+
+  urlBase = api_base + "/"
+
   this.getUserCars = function() {
     var deferred;
     deferred = $q.defer();
     $http({
-      url: api_base,
+      url: urlBase + "service.php",
       method: 'GET'
     }).then(function(data) {
       console.log(data);
@@ -60,7 +64,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistsCtrl', function($scope,tuo_service) {
-  tuo_service.getUserCars();
+  tuo_service.getUserCars().then(function(resp) {
+    console.log(resp.data);
+  });
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
