@@ -1,3 +1,21 @@
+angular.module('starter').service('tuo_service', function($q, $http, api_base) {
+
+  this.getUserCars = function() {
+    var deferred;
+    deferred = $q.defer();
+    $http({
+      url: api_base,
+      method: 'GET'
+    }).then(function(data) {
+      console.log(data);
+      return deferred.resolve(data);
+    });
+    return deferred.promise;
+  };
+
+  return this;
+});
+
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -41,18 +59,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope,$http) {
- $http( {
-     method: 'GET',
-     url: 'http://localhost/work/tourism/webservice/service.php',
-     headers: {
-       'Authorization': undefined
-     }
-   }
- ).
-  error(function(data) {
-    console.log('error');
-  });
+.controller('PlaylistsCtrl', function($scope,tuo_service) {
+  tuo_service.getUserCars();
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
